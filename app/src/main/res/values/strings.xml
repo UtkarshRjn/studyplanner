@@ -4,4 +4,10 @@
     <string name="close">close</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="types">
+        <item>Study Plan</item>
+        <item>Assignment</item>
+        <item>Exam</item>
+        <item>Lecture</item>
+    </string-array>
 </resources>

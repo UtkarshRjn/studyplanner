@@ -4,9 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/ic_baseline_local_phone_24.xml" value="0.34205128205128205" />
-        <entry key="app/src/main/res/layout/activity_add_event.xml" value="0.24427083333333333" />
+        <entry key="app/src/main/res/layout/activity_add_event.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_calendar.xml" value="0.28541666666666665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33125" />
+        <entry key="app/src/main/res/layout/dropdown_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_fragment1.xml" value="0.18125" />
         <entry key="app/src/main/res/layout/fragment_fragment2.xml" value="0.18125" />
         <entry key="app/src/main/res/layout/fragment_fragment3.xml" value="0.18125" />
