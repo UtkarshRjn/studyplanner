@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -83,9 +86,12 @@ public class MainActivity extends AppCompatActivity
                 if(item.getItemId()==R.id.home)
                     Toast.makeText(getApplicationContext(),"Home is clicked",Toast.LENGTH_LONG).show();
 
-                if(item.getItemId()==R.id.calendar)
-                    Toast.makeText(getApplicationContext(),"Calendar is clicked",Toast.LENGTH_LONG).show();
-
+                if(item.getItemId()==R.id.calendar) {
+                    Toast.makeText(getApplicationContext(), "Calendar is clicked", Toast.LENGTH_LONG).show();
+                    Intent myintent = new Intent(MainActivity.this, CalendarActivity.class);
+                    startActivity(myintent);
+                    return false;
+                }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return false;
             }
