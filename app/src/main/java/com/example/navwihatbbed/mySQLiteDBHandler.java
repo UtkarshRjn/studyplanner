@@ -121,13 +121,40 @@ public class mySQLiteDBHandler  extends SQLiteOpenHelper {
 
                 String eventDate = cursor.getString(2);
                 String eventType = cursor.getString(4);
-                Toast.makeText(ct, eventDate, Toast.LENGTH_LONG).show();
                 int index = 0;
                 for(int i=0;i<4;i++){
                     if(Objects.equals(eventType, ct.getResources().getStringArray(R.array.types)[i])) index = i;
                 }
                 if(eventDate.equals(date)){
                     returnList.set(index, returnList.get(index) + 1);
+                }
+
+            }while (cursor.moveToNext());
+        }
+        else{
+            // failure. do not add anything to the list
+        }
+
+        // close both the cursor and the db when done.
+        cursor.close();
+        db.close();
+
+        return returnList;
+    }
+
+    public ArrayList<String> findMarkedDays(Context context) {
+        ArrayList<String> returnList = new ArrayList<>();
+        String queryString = "SELECT * FROM " + EVENT_TABLE;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString,null);
+        if(cursor.moveToFirst()){
+            // loop through the cursor (result set) and create new event Objects. Put them into the return list
+            do{
+
+                String eventDate = cursor.getString(2);
+                if(!returnList.contains(eventDate)) {
+                    returnList.add(eventDate);
                 }
 
             }while (cursor.moveToNext());

@@ -27,7 +27,6 @@ public class fragment1 extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerview_study_plan);
 
         dbHandler = new mySQLiteDBHandler(getContext());
-//        delete_button = fin
 
         List<EventModel> everyone = dbHandler.getType(getResources().getStringArray(R.array.types)[0]);
 

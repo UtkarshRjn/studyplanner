@@ -1,31 +1,24 @@
 package com.example.navwihatbbed;
 
-import static java.util.Calendar.*;
-
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CalendarView;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabItem;
-import com.google.android.material.tabs.TabLayout;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
@@ -35,7 +28,7 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 
-import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
@@ -52,7 +45,9 @@ public class CalendarActivity extends AppCompatActivity {
     private mySQLiteDBHandler dbHandler;
     TextView num_lecture, num_assignment, num_exam , num_study_plan;
     EventDecorator eventDecorator;
+    TodayDecorator todayDecorator;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +76,25 @@ public class CalendarActivity extends AppCompatActivity {
                 .setCalendarDisplayMode(CalendarMode.MONTHS)
                 .commit();
 
-        
+        calendarView.setDateSelected(CalendarDay.today(), true);
+        Collection<CalendarDay> today = new ArrayList<>();
+        today.add(CalendarDay.today());
+        todayDecorator = new TodayDecorator(today);
+        calendarView.addDecorators(todayDecorator);
+
+        ArrayList<String> eventDays = dbHandler.findMarkedDays(this);
+        Collection<CalendarDay> event_col = new ArrayList<>();
+        for(String date: eventDays){
+            int day = Integer.parseInt(date.split("/")[0]);
+            int month = Integer.parseInt(date.split("/")[1]);
+            int year = Integer.parseInt(date.split("/")[2]);
+
+            CalendarDay mydate = CalendarDay.from(year,  month-1, day);
+            event_col.add(mydate);
+        }
+
+        eventDecorator = new EventDecorator(R.color.colorAccent,event_col);
+        calendarView.addDecorators(eventDecorator);
 
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
@@ -90,10 +103,8 @@ public class CalendarActivity extends AppCompatActivity {
                 String OnlyDate = date.toString().substring(date.toString().indexOf("{")+1,date.toString().indexOf("}"));
                 selectedDate = OnlyDate.split("-")[2] + "/" + (Integer.parseInt(OnlyDate.split("-")[1]) + 1 )+ "/" + OnlyDate.split("-")[0];
 
-                Toast.makeText(getApplicationContext(),selectedDate,Toast.LENGTH_SHORT).show();
                 try{
                     List<Integer> count = dbHandler.getCount(getApplicationContext(),selectedDate);
-//                    Toast.makeText(getApplicationContext(), count.get(0).toString(), Toast.LENGTH_LONG).show();
                     num_study_plan.setText(count.get(0).toString());
                     num_assignment.setText(count.get(1).toString());
                     num_exam.setText(count.get(2).toString());
@@ -159,6 +170,25 @@ public class CalendarActivity extends AppCompatActivity {
         @Override
         public void decorate(DayViewFacade view) {
             view.addSpan(new DotSpan(5, color));
+        }
+    }
+
+    public class TodayDecorator implements DayViewDecorator {
+
+        private final HashSet<CalendarDay> dates;
+
+        public TodayDecorator(Collection<CalendarDay> dates) {
+            this.dates = new HashSet<>(dates);
+        }
+
+        @Override
+        public boolean shouldDecorate(CalendarDay day) {
+            return dates.contains(day);
+        }
+
+        @Override
+        public void decorate(DayViewFacade view) {
+            view.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_launcher_background));
         }
     }
 }

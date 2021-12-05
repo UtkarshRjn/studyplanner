@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -72,15 +73,14 @@ public class AddEventActivity extends AppCompatActivity implements AdapterView.O
                 EventModel eventModel;
                 try {
                     eventModel = new EventModel(-1,editTextTitleName.getText().toString(),editTextDate.getText().toString(),editTextTime2.getText().toString(),type,editTextTextMultiLine.getText().toString());
-                    Toast.makeText(getApplicationContext(),eventModel.toString(),Toast.LENGTH_SHORT).show();
                 }catch (Exception e){
                     Toast.makeText(getApplicationContext(),"Error creating Event",Toast.LENGTH_SHORT).show();
                     eventModel = new EventModel(-1,"error_title","error_date","error_time","error_type","error_description");
                 }
 
                 boolean success = dbHandler.addOne(eventModel);
-                Toast.makeText(getApplicationContext(), "Success= " + success, Toast.LENGTH_SHORT).show();
-
+                Intent intent = new Intent(AddEventActivity.this, CalendarActivity.class);
+                startActivity(intent);
             }
         });
 

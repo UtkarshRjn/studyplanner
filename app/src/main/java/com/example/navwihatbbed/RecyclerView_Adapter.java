@@ -50,10 +50,10 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
             public void onClick(View v) {
 
                 removeItem(eventModel);
-                EventModel eventModel = (EventModel) my_list.get(currentPosition);
-                Toast.makeText(context,"Delete called for " + eventModel.toString(), Toast.LENGTH_SHORT).show();
-            }
+//                EventModel eventModel = (EventModel) my_list.get(currentPosition);
+//                Toast.makeText(context,"Delete called for " + eventModel.toString(), Toast.LENGTH_SHORT).show();
 
+            }
 
         });
     }
