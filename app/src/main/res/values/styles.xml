@@ -1,5 +1,7 @@
 <resources>
     <!-- Base application theme. -->
+    <color name="gray">#888</color>
+    <color name="blue">#0000FF</color>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
