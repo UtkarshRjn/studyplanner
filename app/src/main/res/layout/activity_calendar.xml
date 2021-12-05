@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
@@ -18,20 +18,24 @@
             app:titleTextColor="#fff"
             android:id="@+id/custom_toolbar"/>
 
-        <CalendarView
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp" />
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="325dp"
+            app:mcv_selectionColor="#00F"
+            app:mcv_showOtherDates="all" />
 
         <Button
             android:id="@+id/addevent_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/calendarView"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginEnd="161dp"
-            android:layout_marginBottom="-25dp"
+            android:layout_marginBottom="260dp"
             android:text="Add Event" />
 
         <TableLayout

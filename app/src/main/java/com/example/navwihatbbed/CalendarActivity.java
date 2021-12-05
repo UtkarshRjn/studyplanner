@@ -1,5 +1,7 @@
 package com.example.navwihatbbed;
 
+import static java.util.Calendar.*;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +26,19 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.CalendarMode;
+import com.prolificinteractive.materialcalendarview.DayViewDecorator;
+import com.prolificinteractive.materialcalendarview.DayViewFacade;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
+import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 
+import java.time.DayOfWeek;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 public class CalendarActivity extends AppCompatActivity {
@@ -33,10 +47,11 @@ public class CalendarActivity extends AppCompatActivity {
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     Button button;
-    CalendarView calendarView;
+    MaterialCalendarView calendarView;
     String selectedDate;
     private mySQLiteDBHandler dbHandler;
     TextView num_lecture, num_assignment, num_exam , num_study_plan;
+    EventDecorator eventDecorator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +73,24 @@ public class CalendarActivity extends AppCompatActivity {
         num_exam = findViewById(R.id.num_exam);
         num_study_plan = findViewById(R.id.num_study_plan);
 
-        calendarView = findViewById(R.id.calendarView);
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+        calendarView.state().edit()
+                .setFirstDayOfWeek(Calendar.MONDAY)
+                .setMinimumDate(CalendarDay.from(1900, 1, 1))
+                .setMaximumDate(CalendarDay.from(2100, 12, 31))
+                .setCalendarDisplayMode(CalendarMode.MONTHS)
+                .commit();
+
+        
+
+        calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
 
-                selectedDate = dayOfMonth + "/" + (month+1) + '/' + year;
-                calendarView.setDateTextAppearance();
+                String OnlyDate = date.toString().substring(date.toString().indexOf("{")+1,date.toString().indexOf("}"));
+                selectedDate = OnlyDate.split("-")[2] + "/" + (Integer.parseInt(OnlyDate.split("-")[1]) + 1 )+ "/" + OnlyDate.split("-")[0];
 
+                Toast.makeText(getApplicationContext(),selectedDate,Toast.LENGTH_SHORT).show();
                 try{
                     List<Integer> count = dbHandler.getCount(getApplicationContext(),selectedDate);
 //                    Toast.makeText(getApplicationContext(), count.get(0).toString(), Toast.LENGTH_LONG).show();
@@ -76,6 +101,12 @@ public class CalendarActivity extends AppCompatActivity {
                 }catch(Exception e){
                     Toast.makeText(getApplicationContext(), selectedDate, Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        calendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
+            @Override
+            public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
 
             }
         });
@@ -108,5 +139,26 @@ public class CalendarActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    public class EventDecorator implements DayViewDecorator {
+
+        private final int color;
+        private final HashSet<CalendarDay> dates;
+
+        public EventDecorator(int color, Collection<CalendarDay> dates) {
+            this.color = color;
+            this.dates = new HashSet<>(dates);
+        }
+
+        @Override
+        public boolean shouldDecorate(CalendarDay day) {
+            return dates.contains(day);
+        }
+
+        @Override
+        public void decorate(DayViewFacade view) {
+            view.addSpan(new DotSpan(5, color));
+        }
     }
 }
