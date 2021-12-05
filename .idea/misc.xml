@@ -8,11 +8,12 @@
         <entry key="app/src/main/res/layout/activity_calendar.xml" value="0.28541666666666665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/dropdown_item.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_fragment1.xml" value="0.18125" />
+        <entry key="app/src/main/res/layout/fragment_fragment1.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_fragment2.xml" value="0.18125" />
         <entry key="app/src/main/res/layout/fragment_fragment3.xml" value="0.18125" />
         <entry key="app/src/main/res/layout/fragment_fragment4.xml" value="0.18125" />
         <entry key="app/src/main/res/layout/nav_header.xml" value="0.33125" />
+        <entry key="app/src/main/res/layout/recycle_view_row.xml" value="0.5" />
         <entry key="app/src/main/res/menu/nav_menu.xml" value="0.33125" />
       </map>
     </option>

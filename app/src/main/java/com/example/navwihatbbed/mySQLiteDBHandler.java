@@ -2,10 +2,14 @@ package com.example.navwihatbbed;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class mySQLiteDBHandler  extends SQLiteOpenHelper {
 
@@ -48,5 +52,41 @@ public class mySQLiteDBHandler  extends SQLiteOpenHelper {
 
         long insert = db.insert(EVENT_TABLE, null, cv);
         return insert != -1;
+    }
+
+    public List<EventModel> getType(String type) {
+        List<EventModel> returnList = new ArrayList<>();
+
+//        get data from the database
+
+        String queryString = "SELECT * FROM " + EVENT_TABLE;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString,null);
+
+        if(cursor.moveToFirst()){
+           // loop through the cursor (result set) and create new event Objects. Put them into the return list
+            do{
+                int eventID = cursor.getInt(0);
+                String eventTitle = cursor.getString(1);
+                String eventDate = cursor.getString(2);
+                String eventTime = cursor.getString(3);
+                String eventType = cursor.getString(4);
+                String eventDescription = cursor.getString(5);
+
+                EventModel eventModel = new EventModel(eventID,eventTitle,eventDate,eventTime,eventType,eventDescription);
+                if(eventType.equals(type)) returnList.add(eventModel);
+
+            }while (cursor.moveToNext());
+        }
+        else{
+            // failure. do not add anything to the list
+        }
+
+        // close both the cursor and the db when done.
+        cursor.close();
+        db.close();
+
+        return returnList;
     }
 }
