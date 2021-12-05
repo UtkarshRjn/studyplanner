@@ -64,6 +64,7 @@ public class CalendarActivity extends AppCompatActivity {
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
 
                 selectedDate = dayOfMonth + "/" + (month+1) + '/' + year;
+                calendarView.setDateTextAppearance();
 
                 try{
                     List<Integer> count = dbHandler.getCount(getApplicationContext(),selectedDate);

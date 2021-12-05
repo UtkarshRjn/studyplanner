@@ -108,7 +108,7 @@ public class mySQLiteDBHandler  extends SQLiteOpenHelper {
     public List<Integer> getCount(Context ct, String date){
         List<Integer> returnList = new ArrayList<>();
 
-        String queryString = "SELECT * FROM " + EVENT_TABLE + " WHERE " + COLUMN_EVENT_DATE + " = " + date;
+        String queryString = "SELECT * FROM " + EVENT_TABLE;
         for(int i=0;i<4;i++){
             returnList.add(0);
         }
@@ -119,14 +119,16 @@ public class mySQLiteDBHandler  extends SQLiteOpenHelper {
             // loop through the cursor (result set) and create new event Objects. Put them into the return list
             do{
 
-//                String eventDate = cursor.getString(2);
+                String eventDate = cursor.getString(2);
                 String eventType = cursor.getString(4);
-                Toast.makeText(ct, eventType, Toast.LENGTH_LONG).show();
+                Toast.makeText(ct, eventDate, Toast.LENGTH_LONG).show();
                 int index = 0;
                 for(int i=0;i<4;i++){
                     if(Objects.equals(eventType, ct.getResources().getStringArray(R.array.types)[i])) index = i;
                 }
-                returnList.set(index, returnList.get(index) + 1);
+                if(eventDate.equals(date)){
+                    returnList.set(index, returnList.get(index) + 1);
+                }
 
             }while (cursor.moveToNext());
         }
