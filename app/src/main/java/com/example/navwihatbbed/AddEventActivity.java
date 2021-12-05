@@ -2,6 +2,7 @@ package com.example.navwihatbbed;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -19,7 +21,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -44,6 +45,10 @@ public class AddEventActivity extends AppCompatActivity implements AdapterView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setTitle("Add Events");
+        androidx.appcompat.widget.Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
+        setSupportActionBar(toolbar);
 
         spinner = (Spinner)findViewById(R.id.spinner);
         arrayList_types = Arrays.asList(getResources().getStringArray(R.array.types));

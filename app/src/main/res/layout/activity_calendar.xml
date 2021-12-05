@@ -21,10 +21,12 @@
         <com.prolificinteractive.materialcalendarview.MaterialCalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="50dp"
-            android:layout_marginBottom="300dp"
+            app:mcv_arrowColor="#00F"
+            app:mcv_tileSize="50dp"
+            android:layout_marginBottom="325dp"
             app:mcv_selectionColor="#00F"
             app:mcv_showOtherDates="all" />
 
@@ -32,37 +34,35 @@
             android:id="@+id/addevent_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="156dp"
-            android:layout_marginTop="429dp"
-            android:layout_marginEnd="157dp"
-            android:layout_marginBottom="242dp"
+            android:layout_marginEnd="161dp"
+            android:layout_marginBottom="260dp"
             android:text="Add Event" />
 
         <TableLayout
             android:id="@+id/event_table"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="60dp">
+            android:layout_height="match_parent"
+            android:layout_marginTop="500dp">
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_width="205dp"
+                    android:layout_width="200dp"
                     android:layout_height="34dp"
                     android:text="LECTURE"
-                    android:textAlignment="center"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
 
                 <TextView
                     android:id="@+id/num_lecture"
                     android:layout_width="207dp"
                     android:layout_height="match_parent"
-                    android:textAlignment="center"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
 
             </TableRow>
 
@@ -71,18 +71,18 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_width="203dp"
+                    android:layout_width="200dp"
                     android:layout_height="34dp"
                     android:text="STUDY PLAN"
-                    android:textAlignment="center"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/num_study_plan"
                     android:layout_width="207dp"
                     android:layout_height="match_parent"
-                    android:textAlignment="center"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
 
             </TableRow>
 
@@ -94,15 +94,15 @@
                     android:layout_width="200dp"
                     android:layout_height="34dp"
                     android:text="EXAM"
-                    android:textAlignment="center"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
 
                 <TextView
                     android:id="@+id/num_exam"
                     android:layout_width="207dp"
                     android:layout_height="match_parent"
-                    android:textAlignment="center"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
 
             </TableRow>
 
@@ -114,15 +114,15 @@
                     android:layout_width="200dp"
                     android:layout_height="34dp"
                     android:text="ASSIGNMENT"
-                    android:textAlignment="center"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
 
                 <TextView
                     android:id="@+id/num_assignment"
                     android:layout_width="207dp"
                     android:layout_height="match_parent"
-                    android:textAlignment="center"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
 
             </TableRow>
 

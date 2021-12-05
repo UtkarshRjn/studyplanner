@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -53,7 +54,7 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setTitle("Study Planner");
+        setTitle("Calendar");
         Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
         setSupportActionBar(toolbar);
 
@@ -76,11 +77,11 @@ public class CalendarActivity extends AppCompatActivity {
                 .setCalendarDisplayMode(CalendarMode.MONTHS)
                 .commit();
 
+//        Collection<CalendarDay> today = new ArrayList<>();
+//        today.add(CalendarDay.today());
+//        todayDecorator = new TodayDecorator(today);
+//        calendarView.addDecorators(todayDecorator);
         calendarView.setDateSelected(CalendarDay.today(), true);
-        Collection<CalendarDay> today = new ArrayList<>();
-        today.add(CalendarDay.today());
-        todayDecorator = new TodayDecorator(today);
-        calendarView.addDecorators(todayDecorator);
 
         ArrayList<String> eventDays = dbHandler.findMarkedDays(this);
         Collection<CalendarDay> event_col = new ArrayList<>();
@@ -93,7 +94,7 @@ public class CalendarActivity extends AppCompatActivity {
             event_col.add(mydate);
         }
 
-        eventDecorator = new EventDecorator(R.color.colorAccent,event_col);
+        eventDecorator = new EventDecorator(Color.parseColor("#E91E63"),event_col);
         calendarView.addDecorators(eventDecorator);
 
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
