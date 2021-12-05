@@ -45,7 +45,6 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
     private RecyclerView calendarRecyclerView;
     private TextView monthYearText;
     private LocalDate selectedDate2;
-//    CalendarView calendarView;
     String selectedDate;
     private mySQLiteDBHandler dbHandler;
     TextView num_lecture, num_assignment, num_exam , num_study_plan;
@@ -75,27 +74,6 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
         num_exam = findViewById(R.id.num_exam);
         num_study_plan = findViewById(R.id.num_study_plan);
 
-//        calendarView = findViewById(R.id.calendarView);
-//        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-//            @Override
-//            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-//
-//                selectedDate = dayOfMonth + "/" + (month+1) + '/' + year;
-//                calendarView.setDateTextAppearance();
-//
-//                try{
-//                    List<Integer> count = dbHandler.getCount(getApplicationContext(),selectedDate);
-////                    Toast.makeText(getApplicationContext(), count.get(0).toString(), Toast.LENGTH_LONG).show();
-//                    num_study_plan.setText(count.get(0).toString());
-//                    num_assignment.setText(count.get(1).toString());
-//                    num_exam.setText(count.get(2).toString());
-//                    num_lecture.setText(count.get(3).toString());
-//                }catch(Exception e){
-//                    Toast.makeText(getApplicationContext(), selectedDate, Toast.LENGTH_LONG).show();
-//                }
-//
-//            }
-//        });
 
         button = (Button) findViewById(R.id.addevent_button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -182,11 +160,28 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onItemClick(int position, String dayText) {
-        if(dayText.equals("")){
-            String message = "Selected Date" + dayText +  " " + monthYearFromDate(selectedDate2);
-            Toast.makeText(this,message,Toast.LENGTH_LONG).show();
+        if(!dayText.equals("")){
+            selectedDate = dayText + "/" + getMonth(selectedDate2) + "/" + getYear(selectedDate2);
+            try{
+                List<Integer> count = dbHandler.getCount(getApplicationContext(),selectedDate);
+                num_study_plan.setText(count.get(0).toString());
+                num_assignment.setText(count.get(1).toString());
+                num_exam.setText(count.get(2).toString());
+                num_lecture.setText(count.get(3).toString());
+            }catch(Exception e){
+                Toast.makeText(getApplicationContext(), selectedDate, Toast.LENGTH_LONG).show();
+            }
         }
+    }
+
+    private String getYear(LocalDate selectedDate2) {
+        return selectedDate2.toString().split("-")[0];
+    }
+
+    private String getMonth(LocalDate selectedDate2) {
+        return selectedDate2.toString().split("-")[1];
     }
 }
