@@ -28,8 +28,7 @@
             android:layout_marginBottom="-105dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:text="Name" />
+            android:minHeight="48dp" />
 
         <TextView
             android:id="@+id/textView2"

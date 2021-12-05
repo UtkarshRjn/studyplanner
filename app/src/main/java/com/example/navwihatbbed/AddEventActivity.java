@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -33,7 +34,6 @@ public class AddEventActivity extends AppCompatActivity implements AdapterView.O
     private mySQLiteDBHandler dbHandler;
     private EditText editTextTitleName,editTextDate,editTextTime2,editTextTextMultiLine;
     private String type;
-    private String selectedDate;
 
 
     List<String> arrayList_types;
@@ -59,6 +59,11 @@ public class AddEventActivity extends AppCompatActivity implements AdapterView.O
         editTextTime2 = findViewById(R.id.editTextTime2);
         editTextTextMultiLine = findViewById(R.id.editTextTextMultiLine);
         dbHandler = new mySQLiteDBHandler(this);
+
+        Intent intent = getIntent();
+        String date = intent.getStringExtra("Date");
+
+        editTextDate.setText(date);
 
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override

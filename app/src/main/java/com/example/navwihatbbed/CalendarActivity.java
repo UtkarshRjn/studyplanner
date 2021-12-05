@@ -16,11 +16,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.List;
 
 public class CalendarActivity extends AppCompatActivity {
 
@@ -28,6 +33,10 @@ public class CalendarActivity extends AppCompatActivity {
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     Button button;
+    CalendarView calendarView;
+    String selectedDate;
+    private mySQLiteDBHandler dbHandler;
+    TextView num_lecture, num_assignment, num_exam , num_study_plan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +52,39 @@ public class CalendarActivity extends AppCompatActivity {
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        dbHandler = new mySQLiteDBHandler(this);
+        num_lecture = findViewById(R.id.num_lecture);
+        num_assignment = findViewById(R.id.num_assignment);
+        num_exam = findViewById(R.id.num_exam);
+        num_study_plan = findViewById(R.id.num_study_plan);
+
+        calendarView = findViewById(R.id.calendarView);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+
+                selectedDate = dayOfMonth + "/" + (month+1) + '/' + year;
+
+                try{
+                    List<Integer> count = dbHandler.getCount(getApplicationContext(),selectedDate);
+//                    Toast.makeText(getApplicationContext(), count.get(0).toString(), Toast.LENGTH_LONG).show();
+                    num_study_plan.setText(count.get(0).toString());
+                    num_assignment.setText(count.get(1).toString());
+                    num_exam.setText(count.get(2).toString());
+                    num_lecture.setText(count.get(3).toString());
+                }catch(Exception e){
+                    Toast.makeText(getApplicationContext(), selectedDate, Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
         button = (Button) findViewById(R.id.addevent_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CalendarActivity.this, AddEventActivity.class);
+                intent.putExtra("Date",selectedDate);
                 startActivity(intent);
             }
         });

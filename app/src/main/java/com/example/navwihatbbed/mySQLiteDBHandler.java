@@ -5,11 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class mySQLiteDBHandler  extends SQLiteOpenHelper {
 
@@ -54,6 +56,19 @@ public class mySQLiteDBHandler  extends SQLiteOpenHelper {
         return insert != -1;
     }
 
+    public boolean deleteOne(EventModel eventModel){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + EVENT_TABLE + " WHERE " + COLUMN_ID + " = " + eventModel.getId();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+        if(cursor.moveToFirst()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public List<EventModel> getType(String type) {
         List<EventModel> returnList = new ArrayList<>();
 
@@ -76,6 +91,42 @@ public class mySQLiteDBHandler  extends SQLiteOpenHelper {
 
                 EventModel eventModel = new EventModel(eventID,eventTitle,eventDate,eventTime,eventType,eventDescription);
                 if(eventType.equals(type)) returnList.add(eventModel);
+
+            }while (cursor.moveToNext());
+        }
+        else{
+            // failure. do not add anything to the list
+        }
+
+        // close both the cursor and the db when done.
+        cursor.close();
+        db.close();
+
+        return returnList;
+    }
+
+    public List<Integer> getCount(Context ct, String date){
+        List<Integer> returnList = new ArrayList<>();
+
+        String queryString = "SELECT * FROM " + EVENT_TABLE + " WHERE " + COLUMN_EVENT_DATE + " = " + date;
+        for(int i=0;i<4;i++){
+            returnList.add(0);
+        }
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString,null);
+        if(cursor.moveToFirst()){
+            // loop through the cursor (result set) and create new event Objects. Put them into the return list
+            do{
+
+//                String eventDate = cursor.getString(2);
+                String eventType = cursor.getString(4);
+                Toast.makeText(ct, eventType, Toast.LENGTH_LONG).show();
+                int index = 0;
+                for(int i=0;i<4;i++){
+                    if(Objects.equals(eventType, ct.getResources().getStringArray(R.array.types)[i])) index = i;
+                }
+                returnList.set(index, returnList.get(index) + 1);
 
             }while (cursor.moveToNext());
         }

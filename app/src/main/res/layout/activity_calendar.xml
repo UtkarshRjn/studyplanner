@@ -52,9 +52,9 @@
                     android:textAlignment="center"/>
 
                 <TextView
+                    android:id="@+id/num_lecture"
                     android:layout_width="207dp"
                     android:layout_height="match_parent"
-                    android:text="5"
                     android:textStyle="bold"
                     android:textAlignment="center"/>
 
@@ -72,9 +72,9 @@
                     android:textAlignment="center" />
 
                 <TextView
+                    android:id="@+id/num_study_plan"
                     android:layout_width="207dp"
                     android:layout_height="match_parent"
-                    android:text="5"
                     android:textStyle="bold"
                     android:textAlignment="center"/>
 
@@ -92,9 +92,9 @@
                     android:textAlignment="center"/>
 
                 <TextView
+                    android:id="@+id/num_exam"
                     android:layout_width="207dp"
                     android:layout_height="match_parent"
-                    android:text="5"
                     android:textStyle="bold"
                     android:textAlignment="center"/>
 
@@ -112,9 +112,9 @@
                     android:textAlignment="center"/>
 
                 <TextView
+                    android:id="@+id/num_assignment"
                     android:layout_width="207dp"
                     android:layout_height="match_parent"
-                    android:text="5"
                     android:textStyle="bold"
                     android:textAlignment="center"/>
 
