@@ -1,0 +1,1 @@
+This repository contains our outlab9 of `CS251` course `Software System Laboratory` done under `prof. Sanyal` in my third semester at IITB. It is a basic android application with events and calendar for planning lectures, assignments, exams etc. 
